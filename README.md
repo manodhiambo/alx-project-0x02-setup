@@ -49,7 +49,6 @@ Make sure your environment includes:
 
 # 📁 Project Structure
 
-```bash
 alx-project-0x02-setup/
 ├── components/
 │   ├── common/
@@ -87,7 +86,6 @@ alx-project-0x02-setup/
 
 ### Clone the repository
 
-```bash
 git clone https://github.com/your-username/alx-project-0x02-setup.git
 cd alx-project-0x02-setup
 
