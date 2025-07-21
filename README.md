@@ -152,7 +152,6 @@ Using [JSONPlaceholder](https://jsonplaceholder.typicode.com/) to fetch:
 
 ### Example using `useEffect` hook in TypeScript:
 
-```ts
 useEffect(() => {
   fetch('https://jsonplaceholder.typicode.com/posts')
     .then((res) => res.json())
@@ -180,7 +179,6 @@ useEffect(() => {
 
 Use clear, descriptive commit messages such as:
 
-```bash
 feat: add reusable Button component
 fix: correct fetch URL for posts
 refactor: move interfaces to centralized folder
