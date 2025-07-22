@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Card from '@/components/common/Card';
 import Button from '@/components/common/Button';
 import PostModal from '@/components/common/PostModal';
+import Header from '@/components/layout/Header';
 
 interface UserPost {
   id: string;

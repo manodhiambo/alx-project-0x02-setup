@@ -3,6 +3,7 @@ import Head from 'next/head';
 import PostCard from '@/components/common/PostCard';
 import Button from '@/components/common/Button';
 import { PostProps } from '@/interfaces';
+import Header from '@/components/layout/Header';
 
 export default function Posts() {
   const [posts, setPosts] = useState<PostProps[]>([]);
