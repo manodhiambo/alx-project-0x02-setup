@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import Header from '@/components/layout/Header';
 import UserCard from '@/components/common/UserCard';
-import { GetStaticProps } from 'next';
 import { UserProps } from '@/interfaces';
 
 interface UsersPageProps {
@@ -30,14 +29,14 @@ export default function UsersPage({ users }: UsersPageProps) {
   );
 }
 
-export const getStaticProps: GetStaticProps<UsersPageProps> = async () => {
+export async function getStaticProps() {
   try {
     const response = await fetch('https://jsonplaceholder.typicode.com/users');
     const users: UserProps[] = await response.json();
 
     return {
       props: { users },
-      revalidate: 60, // ISR every 60 seconds
+      revalidate: 60,
     };
   } catch (error) {
     console.error('Error fetching users:', error);
@@ -45,5 +44,5 @@ export const getStaticProps: GetStaticProps<UsersPageProps> = async () => {
       props: { users: [] },
     };
   }
-};
+}
 
