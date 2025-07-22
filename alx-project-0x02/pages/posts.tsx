@@ -1,48 +1,13 @@
-import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Header from '@/components/layout/Header';
-import PostCard from '../components/common/PostCard';
-import { PostProps } from '../interfaces';
+import PostCard from '@/components/common/PostCard';
+import { PostProps } from '@/interfaces';
 
-export default function PostsPage() {
-  const [posts, setPosts] = useState<PostProps[]>([]);
-  const [loading, setLoading] = useState(true);
+interface PostsPageProps {
+  posts: PostProps[];
+}
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await fetch('https://jsonplaceholder.typicode.com/posts');
-        const data = await response.json();
-        setPosts(data);
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPosts();
-  }, []);
-
-  if (loading) {
-    return (
-      <>
-        <Head>
-          <title>Posts - ALX Project</title>
-        </Head>
-        <Header />
-        <main className="min-h-screen bg-gray-50">
-          <div className="container mx-auto px-4 py-8">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-              <p className="mt-4 text-gray-600">Loading posts...</p>
-            </div>
-          </div>
-        </main>
-      </>
-    );
-  }
-
+export default function PostsPage({ posts }: PostsPageProps) {
   return (
     <>
       <Head>
@@ -68,4 +33,21 @@ export default function PostsPage() {
       </main>
     </>
   );
+}
+
+export async function getStaticProps() {
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+    const posts: PostProps[] = await response.json();
+
+    return {
+      props: { posts },
+      revalidate: 60, // ISR: Regenerate every 60 seconds
+    };
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    return {
+      props: { posts: [] },
+    };
+  }
 }
