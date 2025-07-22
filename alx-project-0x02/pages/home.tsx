@@ -16,6 +16,7 @@ export default function HomePage() {
       content: "Here's another example of how the Card component works with different content."
     }
   ]);
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleAddPost = (newPost: { title: string; content: string }) => {
@@ -28,7 +29,9 @@ export default function HomePage() {
         <title>Home - ALX Project</title>
         <meta name="description" content="Home page with dynamic cards" />
       </Head>
+      
       <Header />
+      
       <main className="min-h-screen bg-gray-50">
         <div className="container mx-auto px-4 py-8">
           <div className="flex justify-between items-center mb-8">
