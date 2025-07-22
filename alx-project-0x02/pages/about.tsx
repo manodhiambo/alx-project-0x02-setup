@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Header from '@/components/layout/Header';
-import Button from '../components/common/Button';
+import Button from '@/components/common/Button';
 
 export default function AboutPage() {
   return (
