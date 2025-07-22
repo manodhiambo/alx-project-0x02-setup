@@ -1,20 +1,16 @@
-// Interface for Card component props
 export interface CardProps {
   title: string;
   content: string;
 }
 
-// Interface for Button component props
 export interface ButtonProps {
   children: React.ReactNode;
-  size: 'small' | 'medium' | 'large';
-  shape: 'rounded-sm' | 'rounded-md' | 'rounded-full';
   onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
+  size?: 'small' | 'medium' | 'large';
+  shape?: 'rounded-sm' | 'rounded-md' | 'rounded-full';
   className?: string;
 }
 
-// Interface for Post data
 export interface PostProps {
   id: number;
   title: string;
@@ -22,7 +18,6 @@ export interface PostProps {
   userId: number;
 }
 
-// Interface for User data
 export interface UserProps {
   id: number;
   name: string;
@@ -47,9 +42,8 @@ export interface UserProps {
   };
 }
 
-// Interface for PostModal props
 export interface PostModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (title: string, content: string) => void;
+  onAddPost: (post: { title: string; content: string }) => void;
 }
