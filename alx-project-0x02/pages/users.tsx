@@ -1,58 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Head from 'next/head';
+import { GetStaticProps } from 'next';
 import Header from '../components/layout/Header';
 import UserCard from '../components/common/UserCard';
 import { UserProps } from '../interfaces';
 
-const Users: React.FC = () => {
-  const [users, setUsers] = useState<UserProps[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+interface UsersPageProps {
+  users: UserProps[];
+  error?: string;
+}
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch('https://jsonplaceholder.typicode.com/users');
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const userData: UserProps[] = await response.json();
-        setUsers(userData);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch users');
-        console.error('Error fetching users:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUsers();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <Head>
-          <title>Users - Next.js Project</title>
-          <meta name="description" content="Browse users in our Next.js application" />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        
-        <Header />
-        
-        <main className="container mx-auto px-4 py-8">
-          <div className="text-center">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-            <p className="mt-4 text-gray-600">Loading users...</p>
-          </div>
-        </main>
-      </div>
-    );
-  }
-
+const Users: React.FC<UsersPageProps> = ({ users, error }) => {
   if (error) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -171,6 +129,38 @@ const Users: React.FC = () => {
       </footer>
     </div>
   );
+};
+
+// Static Site Generation with data fetching
+export const getStaticProps: GetStaticProps<UsersPageProps> = async () => {
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/users');
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const users: UserProps[] = await response.json();
+
+    return {
+      props: {
+        users,
+      },
+      // Revalidate every 24 hours (86400 seconds)
+      revalidate: 86400,
+    };
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    
+    return {
+      props: {
+        users: [],
+        error: error instanceof Error ? error.message : 'Failed to fetch users',
+      },
+      // Retry after 60 seconds if there was an error
+      revalidate: 60,
+    };
+  }
 };
 
 export default Users;
