@@ -12,17 +12,17 @@ export default function HomePage() {
       content: "This is a sample card component displaying dynamic content."
     },
     {
-      title: "Another Card",
+      title: "Another Card", 
       content: "Here's another example of how the Card component works with different content."
     }
   ]);
   
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  
   const handleAddPost = (newPost: { title: string; content: string }) => {
     setPosts([...posts, newPost]);
   };
-
+  
   return (
     <>
       <Head>
