@@ -129,7 +129,7 @@ const Users: React.FC<UsersPageProps> = ({ users, error }) => {
       </footer>
     </div>
   );
-};
+export default Users;
 
 // Static Site Generation with data fetching
 export const getStaticProps: GetStaticProps<UsersPageProps> = async () => {
@@ -162,5 +162,3 @@ export const getStaticProps: GetStaticProps<UsersPageProps> = async () => {
     };
   }
 };
-
-export default Users;
